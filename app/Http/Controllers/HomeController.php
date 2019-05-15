@@ -2,6 +2,7 @@
 
 namespace thebookshelf\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -14,6 +15,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('starter');
     }
 
     /**
@@ -25,4 +27,6 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    
 }

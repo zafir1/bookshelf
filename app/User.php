@@ -45,6 +45,6 @@ class User extends Authenticatable
     public function details()
     {
         // hasOne(RelatedModel, foreignKeyOnRelatedModel = user_id, localKey = id)
-        return $this->hasOne(Details::class);
+        return $this->hasOne(Details::class,'user_id','id');
     }
 }
