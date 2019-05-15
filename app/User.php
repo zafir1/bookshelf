@@ -36,4 +36,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * User has one Details.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function details()
+    {
+        // hasOne(RelatedModel, foreignKeyOnRelatedModel = user_id, localKey = id)
+        return $this->hasOne(Details::class);
+    }
 }

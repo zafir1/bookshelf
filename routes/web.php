@@ -6,4 +6,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('basic', function() {
+    return view('user.basics');
+});
+
 Route::get('/home', 'HomeController@index')->name('home');
