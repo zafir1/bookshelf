@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace thebookshelf;
 
 use Illuminate\Database\Eloquent\Model;
 

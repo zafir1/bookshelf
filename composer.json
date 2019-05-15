@@ -33,7 +33,7 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "thebookshelf\\": "app/"
         },
         "classmap": [
             "database/seeds",
