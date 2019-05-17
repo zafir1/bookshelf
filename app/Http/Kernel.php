@@ -43,6 +43,7 @@ class Kernel extends HttpKernel
         ],
         'starter' => [
             \thebookshelf\Http\Middleware\CheckBasicDetails::class,
+            \thebookshelf\Http\Middleware\CheckInterestField::class,
         ],
     ];
 

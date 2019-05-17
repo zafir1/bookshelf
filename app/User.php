@@ -47,4 +47,20 @@ class User extends Authenticatable
         // hasOne(RelatedModel, foreignKeyOnRelatedModel = user_id, localKey = id)
         return $this->hasOne(Details::class,'user_id','id');
     }
+
+    /**
+     * User has many UserInterest.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function userInterest()
+    {
+        // hasMany(RelatedModel, foreignKeyOnRelatedModel = user_id, localKey = id)
+        return $this->hasMany(UserInterest::class,'user_id','id');
+    }
+    
+    public function isInterested($id,$array)
+    {
+        return (bool) in_array($id, $array);
+    }
 }

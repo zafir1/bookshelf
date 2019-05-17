@@ -12,6 +12,8 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    <script src="{{ 'https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js' }}"></script>
+
     <!-- Fonts -->
     {{-- <link rel="dns-prefetch" href="//fonts.gstatic.com"> --}}
     {{-- <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css"> --}}
@@ -50,6 +52,12 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item">
+                                <a href="{{ route('book.create') }}" class="nav-link">{{ 'Add Book' }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('interest') }}" class="nav-link">{{ 'Interest' }}</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -67,15 +75,18 @@
                                     </form>
                                 </div>
                             </li>
+                            
                         @endguest
                     </ul>
                 </div>
             </div>
         </nav>
         
-        <div class="container mt-3">
-            @include('layouts.partials.alerts')
-            @yield('content')
+        <div class="container">
+            <div class=" mt-3">
+                @include('layouts.partials.alerts')
+                @yield('content')
+            </div>
         </div>
 
     </div>

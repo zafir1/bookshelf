@@ -4,7 +4,7 @@ namespace thebookshelf;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Details extends Model
+class UserInterest extends Model
 {
-    protected $guarded = [];
+    
 }
