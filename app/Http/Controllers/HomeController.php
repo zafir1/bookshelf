@@ -4,6 +4,7 @@ namespace thebookshelf\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
+use thebookshelf\Book;
 
 class HomeController extends Controller
 {
@@ -25,7 +26,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $books = Book::all();
+        return view('home',[
+            'books' => $books,
+            'device' => 'md',
+            'size' => '6'
+        ]);
     }
 
     

@@ -2,7 +2,11 @@
 
 namespace thebookshelf\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use thebookshelf\Book;
+use thebookshelf\Book_field;
 use thebookshelf\Interest;
 
 class BookController extends Controller
@@ -36,7 +40,33 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attr = request()->validate([
+            'name' => ['required','min:5','max:195','regex:/^[\pL\s\-]+$/u'],
+            'author' => ['required','min:3','max:195'],
+            'publication' => ['required','min:3','max:195'],
+            'edition' => ['required','min:3','max:195'],
+            'price' => ['required','max:50000','numeric'],
+            'checkbox' => ['required','min:3'],
+        ]);
+        $attr = $attr + ['user_id'=>Auth::id()];
+        $book_id = Book::create($attr)->id;
+        $this->createBookField($request,$book_id);
+        return redirect('home')->with('success','Your Book has been added successfully.');
+    }
+
+    private function createBookField(Request $request,$book_id)
+    {
+        $d = array();
+        foreach ($request->input('checkbox') as $field) {
+            $now = Carbon::now();
+            $d[] = [
+                    'book_id' => $book_id,
+                    'field_id' => $field,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ];
+        }
+        Book_field::insert($d);
     }
 
     /**
