@@ -1,6 +1,6 @@
 <div class="col-{{ $device }}-{{ $size }} mb-2 mt-2 p-3">
 	<div class="card">
-		<a href="">
+		<a href="{{ route('book.show',$book->id) }}">
 			<div class="card-header">
 				<b class="text-primary"><i class="fas fa-book"></i> {{ $book->name }}</b>
 			</div>
@@ -28,6 +28,5 @@
 				<a href="" class="btn btn-success">View</a>
 			</div>
 		</div>
-		
 	</div>
 </div>

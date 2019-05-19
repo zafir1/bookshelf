@@ -8,9 +8,13 @@ use Illuminate\Support\Carbon;
 use thebookshelf\Book;
 use thebookshelf\Book_field;
 use thebookshelf\Interest;
+use thebookshelf\User;
 
 class BookController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +22,12 @@ class BookController extends Controller
      */
     public function index()
     {
-    	
+    	$books = Book::all();
+        return view('home',[
+            'books' => $books,
+            'device' => 'md',
+            'size' => '6'
+        ]);
     }
 
     /**
@@ -51,7 +60,18 @@ class BookController extends Controller
         $attr = $attr + ['user_id'=>Auth::id()];
         $book_id = Book::create($attr)->id;
         $this->createBookField($request,$book_id);
-        return redirect('home')->with('success','Your Book has been added successfully.');
+        return redirect('book_details/'.$book_id.'/add')->with('success',"Your Book has beed added successfully. Please write something about book");
+        // return redirect('home')->with('success','Your Book has been added successfully.');
+    }
+
+    public function createDetail($id)
+    {
+        dd($id);
+    }
+
+    public function storeDetail(Request $request)
+    {
+        dd($request->details);
     }
 
     private function createBookField(Request $request,$book_id)
@@ -69,15 +89,43 @@ class BookController extends Controller
         Book_field::insert($d);
     }
 
+    private function saveBook()
+    {
+        # code...
+    }
+
+    /**
+     *
+     * Search Books
+     *
+     */
+    public function Search(Request $request)
+    {
+        $books = Book::where('name','LIKE','%'.$request->search.'%')
+                    ->orWhere('author','LIKE','%'.$request->search.'%')
+                    ->orWhere('publication','LIKE','%'.$request->search.'%')
+                    ->orWhere('publication','LIKE','%'.$request->search.'%')
+                    ->get();
+        if(!$books->count()){
+            return redirect('/home')->with('info',"Sorry! we couldn't found any result for ".$request->search);
+        }
+        return view('home',[
+            'device' => 'md',
+            'size' => '6',
+            'books' => $books,
+        ]);
+    }
+
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Book $book)
     {
-        //
+        $seller = User::findOrFail($book->user_id);
+        dd($seller,$book);
     }
 
     /**
@@ -113,4 +161,6 @@ class BookController extends Controller
     {
         //
     }
+
+    
 }

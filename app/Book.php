@@ -12,4 +12,20 @@ class Book extends Model
      * @var array
      */
     protected $fillable = ['name','user_id','price','author','publication','edition','sold'];
+
+    /**
+     * Book has one BookDe.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function BookDetail()
+    {
+    	// hasOne(RelatedModel, foreignKeyOnRelatedModel = book_id, localKey = id)
+    	return $this->hasOne(BookDetail::class);
+    }
+
+    public function detailsCompleted()
+    {
+    	return (bool) $this->BookDetail()->get()->count();
+    }
 }

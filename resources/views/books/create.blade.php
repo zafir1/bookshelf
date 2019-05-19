@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('title','Add Book | TheBookShelf')
 @section('content')
 
@@ -74,9 +73,8 @@
 						</div>
 					</div>
 				</div>
-				
 				{{-- /*=====  End of Price and Edition  ======*/ --}}
-				<input type="submit" value="Add Book" class="btn btn-success form-control">
+			<input type="submit" value="Add Book" class="btn btn-success form-control">
 			</div>
 
 			<div class="col-md-4 mt-3">
@@ -92,3 +90,4 @@
 		</div>
 	</form>
 @endsection
+

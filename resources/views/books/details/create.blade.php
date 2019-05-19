@@ -9,10 +9,25 @@
     </head>
     <body>
         @include('layouts.navigations.topnav')
-    
+    	
         <div class="container">
+        	@include('layouts.partials.alerts')
             <div class="h4 mt-3 mb-3">
                 Add Details
+            </div>
+            <div class="row mt-3 mb-3">
+            	<div class="col-md-6">
+            		<b>Author:</b> {{ $book->author }}
+            	</div>
+            	<div class="col-md-6">
+            		<b>publication:</b> {{ $book->publication }}
+            	</div>
+            	<div class="col-md-6">
+            		<b>Price:</b> {{ $book->price }}
+            	</div>
+            	<div class="col-md-6">
+            		<b>Edition:</b> {{ $book->edition }}
+            	</div>
             </div>
             <div>
                 {{-- Add Book Details here. --}}
@@ -21,13 +36,13 @@
             <div class="">
                 <form action="{{ url('book_details/'.$id.'/add') }}" method="POST" class="form-group">
                     @csrf
-                    <textarea name="details">Write something about <h3>me<h3></textarea>
-                    <input type="submit" value="submit" class="mt-4 btn btn-primary form-control">
+                    <textarea name="description">Write something about <h3>me<h3></textarea>
+                    <input type="submit" value="Add detail" class="mt-4 btn btn-primary form-control">
                 </form>
             </div>
         </div>
     </body>
     <script>
-            CKEDITOR.replace( 'details' );
+            CKEDITOR.replace( 'description' );
     </script>
 </html>
