@@ -27,6 +27,9 @@
                 @endif
                 @else
                 <li class="nav-item">
+                    <a href="{{ url('mybooklist') }}" class="nav-link">{{ 'My Books' }}</a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('book.create') }}" class="nav-link">{{ 'Add Book' }}</a>
                 </li>
                 <li class="nav-item">

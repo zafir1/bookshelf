@@ -28,4 +28,16 @@ class Book extends Model
     {
     	return (bool) $this->BookDetail()->get()->count();
     }
+
+    /**
+     * Book belongs to User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function getUser()
+    {
+        // belongsTo(RelatedModel, foreignKey = user_id, keyOnRelatedModel = id)
+        return $this->belongsTo(User::class);
+    }
+
 }

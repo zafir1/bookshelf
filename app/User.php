@@ -63,4 +63,15 @@ class User extends Authenticatable
     {
         return (bool) in_array($id, $array);
     }
+
+    /**
+     * User has many Books.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function books()
+    {
+        // hasMany(RelatedModel, foreignKeyOnRelatedModel = user_id, localKey = id)
+        return $this->hasMany(Book::class);
+    }
 }

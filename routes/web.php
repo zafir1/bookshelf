@@ -4,6 +4,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/', 'BookController@index')->name('home');
+Route::get('/mybooklist', 'BookController@mybooklist')->name('home');
+
 Auth::routes();
 
 Route::resource('book','BookController')->middleware('auth');

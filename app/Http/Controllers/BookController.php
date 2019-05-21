@@ -14,6 +14,7 @@ class BookController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
+        $this->middleware('starter');
     }
     /**
      * Display a listing of the resource.
@@ -22,13 +23,14 @@ class BookController extends Controller
      */
     public function index()
     {
-    	$books = Book::all();
+        $books = Book::all()->where('sold',0);
         return view('home',[
             'books' => $books,
             'device' => 'md',
             'size' => '6'
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -104,15 +106,15 @@ class BookController extends Controller
         $books = Book::where('name','LIKE','%'.$request->search.'%')
                     ->orWhere('author','LIKE','%'.$request->search.'%')
                     ->orWhere('publication','LIKE','%'.$request->search.'%')
-                    ->orWhere('publication','LIKE','%'.$request->search.'%')
+                    ->orWhere('edition','LIKE','%'.$request->search.'%')
                     ->get();
         if(!$books->count()){
             return redirect('/home')->with('info',"Sorry! we couldn't found any result for ".$request->search);
         }
         return view('home',[
-            'device' => 'md',
-            'size' => '6',
             'books' => $books,
+            'device' => 'md',
+            'size' => '6'
         ]);
     }
 
@@ -125,7 +127,24 @@ class BookController extends Controller
     public function show(Book $book)
     {
         $seller = User::findOrFail($book->user_id);
-        dd($seller,$book);
+        $book_details = $book->BookDetail;
+        if(!$book_details){
+            $book_details = null;
+        }
+        $time = Carbon::parse($book->created_at)->diffForHumans();
+        
+        return view('books.show',[
+            'seller' => $seller,
+            'book' => $book,
+            'book_details' => $book_details,
+            'upload_time' => $time,
+        ]);
+    }
+
+    public function mybooklist()
+    {
+        $books = Auth::user()->books->where('sold',0);
+        return view('books.mylist',['books'=>$books,]);
     }
 
     /**
@@ -140,15 +159,15 @@ class BookController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Function to delete the book.
+     *
      */
-    public function update(Request $request, $id)
+    
+    public function update(Book $book)
     {
-        //
+        $book->update(['sold'=>1]);
+        return redirect('/home')->with('info','Book has been successfully deleted.');
     }
 
     /**
